@@ -37,6 +37,7 @@ def server(hops, sender_no, log_file):
 			total_size = info['file_size']
 			buf = bytearray(b' ' * total_size)
 			client_sock.send('ok\n')
+			time.sleep(1)
 			read = 0
 			to_read = total_size
 			chunk_size = info['chunk_size']
