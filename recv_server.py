@@ -25,11 +25,11 @@ def log(filename, line):
 		f.write(line)
 
 def server(hops, sender_no, log_file):
+	listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	listen_socket.bind(('', PORT))
+	listen_socket.listen(5)
 	while True:
 		try:
-			listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			listen_socket.bind(('', PORT))
-			listen_socket.listen(5)
 			client_sock, addr = listen_socket.accept()
 			handshake = client_sock.recv(BUFSIZE)
 			info = json.loads(handshake)
@@ -50,8 +50,10 @@ def server(hops, sender_no, log_file):
 				f.write(buf)
 
 			log(log_file, str(end_time - start_time))
+			client_sock.close()
 		except KeyboardInterrupt:
 			print "Ctrl + c detected"
+			listen_socket.close()
 			sys.exit(0)
 
 main()
