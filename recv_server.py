@@ -46,7 +46,7 @@ def server(hops, sender_no, log_file):
 				read += client_sock.recv_into(view[read:], min(to_read - read, chunk_size))
 			end_time = timeit.default_timer()
 
-			with open('received_file%10d.txt' % time.time(), 'w') as f:
+			with open('received_file%10d.datafile' % time.time(), 'w') as f:
 				f.write(buf)
 
 			log(log_file, str(end_time - start_time))
